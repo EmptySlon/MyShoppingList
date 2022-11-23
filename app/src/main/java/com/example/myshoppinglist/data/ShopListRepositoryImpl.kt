@@ -15,7 +15,7 @@ object ShopListRepositoryImpl : ShopListRepository {
 
     init {
 
-        for (i in 0..100) {
+        for (i in 0..10) {
             addShopItem(ShopItem("name $i", i, Random.nextBoolean()))
         }
 

@@ -1,12 +1,44 @@
 package com.example.myshoppinglist.presentation
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.myshoppinglist.R
+import com.example.myshoppinglist.presentation.ShopItemActivity.Companion.MODE_EDIT
 
 class ShopItemActivity : AppCompatActivity() {
+    lateinit var viewModel: AddShopItemViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
+        viewModel = AddShopItemViewModel()
+        val mode = intent.getStringExtra(EXTRA_SCREEN_MODE)!!
+//        when{
+//            mode == MODE_ADD -> {
+//                val shopItemId = intent.getIntExtra(EXTRA_SHOP_ITEM_ID, 0)
+//                viewModel.getShopItem(shopItemId)
+//            }
+//        }
+    }
+
+    companion object {
+        private const val EXTRA_SCREEN_MODE = "extra_mode"
+        private const val EXTRA_SHOP_ITEM_ID = "extra_shop_item_id"
+        private const val MODE_EDIT = "mode_edit"
+        private const val MODE_ADD = "mode_add"
+
+        fun newIntentAddItem(context: Context): Intent {
+            val intent = Intent(context, ShopItemActivity::class.java)
+            intent.putExtra(EXTRA_SCREEN_MODE, MODE_ADD)
+            return intent
+        }
+        fun newIntentEditItem(context: Context, shopItemId: Int): Intent {
+            val intent = Intent(context, ShopItemActivity::class.java)
+            intent.putExtra(EXTRA_SCREEN_MODE, MODE_EDIT)
+            intent.putExtra(EXTRA_SHOP_ITEM_ID, shopItemId)
+            return intent
+        }
     }
 }

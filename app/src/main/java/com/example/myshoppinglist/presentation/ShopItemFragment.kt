@@ -3,6 +3,7 @@ package com.example.myshoppinglist.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.service.controls.templates.TemperatureControlTemplate.MODE_UNKNOWN
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -30,6 +31,16 @@ class ShopItemFragment(
     private var shopItemId: Int = ShopItem.UNDEFINED_ID
 
     lateinit var viewModel: AddShopItemViewModel
+    private lateinit var onEditingFinishedListener: OnEditingFinishedListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnEditingFinishedListener) {
+            onEditingFinishedListener = context
+        } else {
+            throw RuntimeException("Activity must implement OnEditingFinishedListener")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +64,7 @@ class ShopItemFragment(
             MODE_EDIT -> launchEditMode()
         }
         viewModel.shouldCloseScreen.observe(viewLifecycleOwner) {
-            activity?.onBackPressed()
+            onEditingFinishedListener.onEditingFinished()
         }
         viewModel.errorInputName.observe(viewLifecycleOwner) {
             if (it) tilName.error = "Invalid input name"
@@ -123,6 +134,10 @@ class ShopItemFragment(
         etName = view.findViewById(R.id.et_name)
         etCount = view.findViewById(R.id.et_count)
         buttonSave = view.findViewById(R.id.save_button)
+    }
+
+    interface OnEditingFinishedListener {
+        fun onEditingFinished()
     }
 
     companion object {

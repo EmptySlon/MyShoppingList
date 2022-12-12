@@ -15,7 +15,7 @@ import com.example.myshoppinglist.domain.ShopItem
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
     lateinit var shopListAdapter: ShopListAdapter
     lateinit var itemTouchHelper: ItemTouchHelper
@@ -28,11 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         shopItemContainer = findViewById(R.id.shop_item_container)
-        if (!isOnePaneMode()) {
-            val fragment = ShopItemFragment.newInstanceAddItem()
-            launchFragment(fragment)
-        }
-
 
         setupRecycleView()
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
@@ -128,6 +123,11 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.shop_item_container, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onEditingFinished() {
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+        supportFragmentManager.popBackStack()
     }
 
 

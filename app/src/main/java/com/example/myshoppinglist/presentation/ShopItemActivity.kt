@@ -2,30 +2,24 @@ package com.example.myshoppinglist.presentation
 
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.parseIntent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.service.controls.templates.TemperatureControlTemplate.MODE_UNKNOWN
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
 import com.example.myshoppinglist.R
+import com.example.myshoppinglist.databinding.ActivityShopItemBinding
 import com.example.myshoppinglist.domain.ShopItem
-import com.example.myshoppinglist.presentation.ShopItemActivity.Companion.MODE_EDIT
-import com.google.android.material.textfield.TextInputLayout
 
 class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
+    private lateinit var  binding : ActivityShopItemBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_shop_item)
+        binding = ActivityShopItemBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         parseIntent()
         if (savedInstanceState == null) {
             launchRightMode()

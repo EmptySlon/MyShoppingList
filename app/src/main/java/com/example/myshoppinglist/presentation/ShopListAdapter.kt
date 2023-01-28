@@ -37,9 +37,7 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
         val shopItem = shopList[position]
         val binding = holder.binding
-        val textItem = holder.binding.root.context.getString(
-            R.string.text_shop_item, shopItem.name, shopItem.enabled.toString()
-        )
+
         binding.root.setOnLongClickListener {
             onShopItemLongClickListener?.invoke(shopItem)
             true
@@ -49,12 +47,14 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         }
         when (binding) {
             is ItemShopEnabledBinding -> {
-                binding.tvName.text = textItem
-                binding.tvCount.text = shopItem.count.toString()
+                binding.shopItem = shopItem
+//                binding.tvName.text = textItem
+//                binding.tvCount.text = shopItem.count.toString()
             }
             is ItemShopDisabledBinding -> {
-                binding.tvName.text = textItem
-                binding.tvCount.text = shopItem.count.toString()
+                binding.shopItem = shopItem
+//                binding.tvName.text = textItem
+//                binding.tvCount.text = shopItem.count.toString()
             }
         }
     }

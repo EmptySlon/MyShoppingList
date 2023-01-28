@@ -1,9 +1,7 @@
 package com.example.myshoppinglist.presentation
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.service.controls.templates.TemperatureControlTemplate.MODE_UNKNOWN
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -92,6 +90,8 @@ class ShopItemFragment(
         })
 
     }
+
+
 
     private fun launchEditMode() {
         viewModel.getShopItem(shopItemId)
